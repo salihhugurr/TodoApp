@@ -18,9 +18,7 @@ type Props = {
 };
 
 const TodoList = ({ list,onPress }: Props) => {
-
-  const renderItem = ({ item, index }:any) => {
-    return (
+  const renderItem = ({ item, index }:any) => (
       <TouchableOpacity
         onPress={() => onPress(item)}
         key={index}
@@ -36,7 +34,6 @@ const TodoList = ({ list,onPress }: Props) => {
           <Text style={styles.infoText}>{item.info}</Text>
           <CustomCheckIcon item={item} index={index} />
         </View>
-        {item.categories && (
           <ScrollView horizontal contentContainerStyle={{ gap: 10 }}>
             {item.categories.map((category: string) => (
               <View key={category} style={styles.categoryView}>
@@ -44,7 +41,6 @@ const TodoList = ({ list,onPress }: Props) => {
               </View>
             ))}
           </ScrollView>
-        )}
         <View style={styles.rowCenter}>
           <View style={styles.timeRowContainer}>
             <Icon name={"calendar"} type="antdesign" size={ww(0.05)} />
@@ -66,17 +62,14 @@ const TodoList = ({ list,onPress }: Props) => {
         </View>
       </TouchableOpacity>
     );
-  };
 
   return (
-    <View style={styles.container}>
       <FlatList
         data={list}
         renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(_, index) => index.toString()}
       />
-    </View>
   );
 };
 
@@ -84,13 +77,10 @@ export default TodoList;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    paddingBottom:wh(.1),
-    marginVertical: wh(0.02),
+    width:"100%",
+    alignSelf:"center",
   },
   todoView: {
-    flex:1,
-    width: "100%",
     gap: wh(0.02),
     borderRadius: 10,
     padding: wh(0.02),

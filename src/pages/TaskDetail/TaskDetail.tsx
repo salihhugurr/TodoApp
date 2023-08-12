@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View,  Alert } from "react-native";
 import { STYLES } from "../../styles";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { AddTaskForm, CustomHeader } from "../../components";
@@ -16,8 +16,17 @@ const TaskDetail: React.FC<TaskDetailProps> = () => {
   return (
     <View style={STYLES.container}>
       <CustomHeader left title="Task Detail" navigation={navigation} onPressRight={() => {
-        navigation.goBack();
-        dispatch(deleteTodo(todoObject));
+        Alert.alert("Delete Task", "Are you sure to delete this task?", [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          { text: "Yes", onPress: () => {
+            navigation.goBack();
+            dispatch(deleteTodo(todoObject));
+          } },
+        ]);
+        
       }}/>
       <AddTaskForm todoObject={todoObject}/>
     </View>
@@ -26,4 +35,3 @@ const TaskDetail: React.FC<TaskDetailProps> = () => {
 
 export default TaskDetail;
 
-const styles = StyleSheet.create({});

@@ -18,7 +18,7 @@ type HeaderProps = {
 const CustomHeader = ({ title, left, navigation,onPressRight }: HeaderProps) => {
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="auto" />
       <Header
         containerStyle={styles.headerContainer}
         leftContainerStyle={{ width: "100%" }}

@@ -5,6 +5,6 @@ export const STYLES = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:theme.white,
-        alignSelf:"center"
+        alignSelf:"center",
     }
 });

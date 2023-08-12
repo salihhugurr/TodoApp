@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet,TextInput, Keyboard } from "react-native";
 import { theme, wh, ww } from "../../helpers";
 import { SearchIcon } from "../../assets/Icons";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 type Props = {
   updateSearch: (text:string) => void;
@@ -10,7 +11,10 @@ type Props = {
 
 export default function CustomSearchBar({ search,updateSearch }: Props) {
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback
+      onPressOut={Keyboard.dismiss}
+      style={styles.container}
+    >
       <TextInput
         style={styles.input}
         placeholder="Find your task"
@@ -19,7 +23,7 @@ export default function CustomSearchBar({ search,updateSearch }: Props) {
         onChangeText={updateSearch}
       />
       <SearchIcon size={ww(0.06)} color={theme.dark} />
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({

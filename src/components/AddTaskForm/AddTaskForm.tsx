@@ -1,4 +1,4 @@
-import {  StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Icon } from "react-native-elements";
@@ -46,16 +46,21 @@ const AddTaskForm = ({ todoObject }: Props) => {
   };
 
   const createTodo = () => {
-    dispatch(addTodo(todo));
-    todo.categories.forEach((category: string) => {
-      !categories.includes(category) && dispatch(addCategory(category));
-    });
-    navigation.goBack();
+    if (todo.info && todo.categories.length > 0 && todo.description) {
+      dispatch(addTodo(todo));
+      todo.categories.forEach((category: string) => {
+        !categories.includes(category) && dispatch(addCategory(category));
+      });
+      navigation.goBack();
+    } else Alert.alert("Lütfen tüm alanları doldurunuz.")
   };
 
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid={true}
       extraScrollHeight={wh(0.04)}
+      extraHeight={wh(0.1)}
+      enableAutomaticScroll
       style={STYLES.container}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ paddingBottom: wh(0.06) }}
@@ -67,8 +72,7 @@ const AddTaskForm = ({ todoObject }: Props) => {
             editable={!todoObject}
             value={todo.info}
             placeholder="Title"
-                        placeholderTextColor={theme.grey3}
-
+            placeholderTextColor={theme.grey3}
             onChangeText={(text) => handleInputChange("info", text)}
             style={styles.input}
           />
@@ -94,12 +98,9 @@ const AddTaskForm = ({ todoObject }: Props) => {
       >
         <Text style={styles.inputTitle}>Date</Text>
         <View style={styles.inputView}>
-          <TextInput
-            editable={false}
-            value={moment(todo.date).format("MMMM D, YYYY")}
-            placeholder="Gün/Ay/Yıl"
-            style={styles.input}
-          />
+          <Text style={styles.input2}>
+            {moment(todo.date).format("MMMM D, YYYY")}
+          </Text>
           <View>
             <Icon
               name="calendar"
@@ -145,12 +146,9 @@ const AddTaskForm = ({ todoObject }: Props) => {
             onPress={() => setOpenStartTime(true)}
             style={styles.inputView2}
           >
-            <TextInput
-              editable={false}
-              value={moment(todo.startTime).format("LT")}
-              placeholder="--"
-              style={styles.input2}
-            />
+            <Text style={styles.input2}>
+              {moment(todo.startTime).format("LT") || "--"}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
@@ -160,12 +158,9 @@ const AddTaskForm = ({ todoObject }: Props) => {
             onPress={() => setOpenEndTime(true)}
             style={styles.inputView2}
           >
-            <TextInput
-              editable={false}
-              value={moment(todo.endTime).format("LT")}
-              placeholder="--"
-              style={styles.input2}
-            />
+            <Text style={styles.input2}>
+              {moment(todo.endTime).format("LT") || "--"}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -195,8 +190,7 @@ const AddTaskForm = ({ todoObject }: Props) => {
               }}
               onChangeText={setCategory}
               placeholder="Category"
-                          placeholderTextColor={theme.grey3}
-
+              placeholderTextColor={theme.grey3}
               style={styles.input}
             />
             <Icon
@@ -319,6 +313,8 @@ const styles = StyleSheet.create({
   },
   inputDescription: {
     flex: 1,
+    textAlign: "left",
+    alignSelf: "flex-start",
     fontFamily: theme.semiBold,
     color: theme.dark,
   },
@@ -332,7 +328,7 @@ const styles = StyleSheet.create({
     gap: ww(0.01),
     flexWrap: "wrap",
     flexDirection: "row",
-    justifyContent: "center", 
+    justifyContent: "center",
   },
   categoryView: {
     width: ww(0.9) / 3.5,

@@ -1,13 +1,14 @@
 import { Icon } from "react-native-elements";
 import { useDispatch } from "react-redux";
 import { updateTodoCompleted } from "../../redux/features/todo/todoSlice";
-import { theme } from "../../helpers";
+import { theme, ww } from "../../helpers";
 import { useEffect, useState } from "react";
 
 type Props = {
   item:Todo,
   index:number,
 }
+
 const CustomCheckIcon = ({ item,index }:Props) => {
   const dispatch = useDispatch();
   const [completed,setCompleted] = useState(item.completed);
@@ -25,6 +26,7 @@ const CustomCheckIcon = ({ item,index }:Props) => {
     <Icon
       name={completed ? "checkcircle" : "checkcircleo"}
       type="antdesign"
+      size={ww(.07)}
       color={completed ? theme.success : theme.dark}
       onPress={handlePress}
     />

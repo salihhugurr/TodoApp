@@ -32,10 +32,13 @@ const TabRoutes = ({}: Props) => {
       {screens && (
         <Tab.Navigator
           screenOptions={({ route }) => ({
+            tabBarOptions: {
+              keyboardHidesTabBar: true,
+            },
             tabBarIcon: ({ focused, color }) => {
               let icon = <HomeIcon size={ww(0.045)} color={color} />;
 
-             if (route.name === "AddTask") {
+              if (route.name === "AddTask") {
                 icon = <PlusIcon size={ww(0.045)} color={color} />;
               } else if (route.name === "Completed") {
                 icon = <Icon name="check" size={ww(0.045)} color={color} />;
@@ -66,12 +69,13 @@ const TabRoutes = ({}: Props) => {
             tabBarInactiveTintColor: theme.dark,
             tabBarShowLabel: false,
             tabBarStyle: {
-              height: wh(0.1),
+              height: wh(0.08),
               justifyContent: "center",
               alignItems: "center",
               borderTopWidth: 1,
-              borderColor: theme.appColor,
+              borderColor: theme.dark,
             },
+            style: { position: "absolute" },
           })}
         >
           {screens.map((screen) => (

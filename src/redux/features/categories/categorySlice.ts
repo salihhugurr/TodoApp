@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: CategoryState = {
-  categories: [],
+  categories: ["Coding","UI","React","React Native"],
 };
 
 const categorySlice = createSlice({
